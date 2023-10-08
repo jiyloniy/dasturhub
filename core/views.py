@@ -330,7 +330,7 @@ def student_delete(request, pk):
 
 def lead_to_sudent(request, pk):
     lead = get_object_or_404(Leads, pk=pk)
-    form = LeadToStudentForm()
+    form = LeadToStudentForm(instance=lead)
     if request.method == 'POST':
         form = LeadToStudentForm(request.POST)
         if form.is_valid():
