@@ -1,0 +1,97 @@
+{% load static %}
+{% include 'index.html' %}
+<!DOCTYPE html>
+  <body>
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/card.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css"
+    />
+          <div class="main_wrapper">
+            <!-- ASOSIY CODE SHU YERGA YOZILADI -->
+            <!-- CARD -->
+             <div class="table_cards_wrapper">
+              <div class="table_sorov table_sorov_main">
+                <div class="table_title">
+                  <div class="table_name_title">
+                    So'rovlar <span>(520)</span>
+                  </div>
+                  <button class="table_add_btn" ><a href='#'>+</a></button>
+                </div>
+                <div class="table_search_btn">
+                  <input type="text" placeholder="Search..."/>
+                </div>
+                
+                <div class="table_cards">
+                    {% for lead in new %}  
+                  <div class="table_card">
+                    <div class="table_card_left">
+                      <div class="table_card_name">{{lead.name}}</div>
+                      <div class="table_card_phone">{{lead.phone}}</div>
+                    </div>
+                    <div class="table_card_right">
+                      <div class="table_card_edit">
+                        <a href=' {% url "lead_update" lead.id %} ' > <i class="fa-regular fa-pen-to-square"></i></a>
+                      </div>
+                      <div class="table_card_time">{{lead.created_at}}</div>
+                    </div>
+                     
+                 </div>
+                   {% endfor %}    
+                </div>
+              </div>
+              <div class="table_sorov table_kutish">
+                <div class="table_title">Kutish <span>(777) </span></div>
+                <div class="table_search_btn">
+                  <input type="text" placeholder="Search..." />
+                </div>
+                <div class="table_cards">
+                    {% for lead in inprogress  %}
+                  <div class="table_card">
+                    <div class="table_card_left">
+                      <div class="table_card_name">{{lead.name}}</div>
+                      <div class="table_card_phone">{{lead.phone}}</div>
+                    </div>
+                    <div class="table_card_right">
+                      <div class="table_card_edit">
+                        <a href=' {% url "lead_update" lead.id %} ' > <i class="fa-regular fa-pen-to-square"></i></a>
+                      </div>
+                      <div class="table_card_time">{{lead.updated_at}}</div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  
+                </div>
+              </div>
+              <div class="table_sorov table_toplam">
+                <div class="table_title">To'plam <span>(561) </span></div>
+                <div class="table_search_btn">
+                  <input type="text" placeholder="Search..." />
+                </div>
+                <div class="table_cards">
+                    {% for lead in colected  %}
+                  <div class="table_card">
+                    <div class="table_card_left">
+                      <div class="table_card_name">{{lead.name}}</div>
+                      <div class="table_card_phone">{{lead.phone}}</div>
+                    </div>
+                    <div class="table_card_right">
+                      <div class="table_card_edit">
+                        <a href=' {% url "lead_update" lead.id %} ' > <i class="fa-regular fa-pen-to-square"></i></a>
+                      </div>
+                      <div class="table_card_time">{{lead.updated_at}}</div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{% static './profile.js' %}"></script>
+  </body>

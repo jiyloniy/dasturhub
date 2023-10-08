@@ -1,0 +1,46 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+
+  <!-- ASOSIY CODE SHGU YERA YOZILADI -->
+  <!-- CARD -->
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} style="color: lawngreen;" class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <div class="table_cards_wrapper">
+    {% for period in periods %}
+    <div class="table_sorov table_sorov_main">
+      <div class="table_title">
+        <div class="table_name_title">{{period.name}} <span>({{period.leads_set.all.count}})</span></div>
+        <a href='{% url "leadregister" %}?a={{ period.id }}'><button class="table_add_btn">+</button></a>
+      </div>
+      <div class="table_search_btn">
+        <input type="text" placeholder="Search..." />
+      </div>
+      
+      <div class="table_cards">
+        {% for lead in period.leads_set.all %}
+        <div class="table_card">
+          <div class="table_card_left">
+            <div class="table_card_name">{{lead.name}}</div>
+            <div class="table_card_phone">{{lead.phone}}</div>
+          </div>
+          <div class="table_card_right">
+            <div class="table_card_edit">
+              <a href = '{% url "lead_update" lead.id %}'><i class="fa-regular fa-pen-to-square" style="color: lawngreen;"></i></a>   
+              <a href = '{% url "lead_delete" lead.id %}'><i class="fa-regular fa-trash" style="color: red; margin-left: 10px;"></i></a>
+            </div>
+            <div class="table_card_time">{{lead.created_at}}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock content %} 

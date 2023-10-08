@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  <!-- ASOSIY CODE SHGU YERA YOZILADI -->
+  <!-- CARD -->
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} style="color: lawngreen;" class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <div class="table_cards_wrapper">
+    
+    <div class="table_cards">
+        {% for teacher in teachers %}
+        <div class="table_card">
+          <div class="table_card_left">
+            <div class="table_card_name">{{teacher.name}}</div>
+
+          </div>
+          <div class="table_card_right">
+            <div class="table_card_edit">
+              <a href = '{% url "group_update" teacher.id %}'><i class="fa-regular fa-pen-to-square" style="color: lawngreen;"></i></a>   
+              <a href = '{% url "group_delete" teacher.id %}'><i class="fa-regular fa-trash" style="color: red; margin-left: 10px;"></i></a>
+            </div>
+            <div class="table_card_time">{{lead.created_at}}</div>
+          </div>
+        </div>
+        {% endfor %}
+  </div>
+{% endblock %}

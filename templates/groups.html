@@ -1,0 +1,157 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+<table class="daily_table" style="width:100%; overflow-x:scroll; box-shadow:5px 5px 5px #aaaaaaaa">
+        <div class="daily_table_wrapper">
+        <tr class="time_tr">
+          <th class="table_empty_col"></th>
+          <th>07:00</th>
+          <th>07:30</th>
+          <th>08:00</th>
+          <th>08:30</th>
+          <th>09:00</th>
+          <th>09:30</th>
+          <th>10:00</th>
+          <th>10:30</th>
+          <th>11:00</th>
+          <th>11:30</th>
+          <th>12:00</th>
+          <th>12:30</th>
+          <th>13:00</th>
+          <th>13:30</th>
+          <th>14:00</th>
+          <th>14:30</th>
+          <th>15:00</th>
+          <th>15:30</th>
+          <th>16:00</th>
+          <th>16:30</th>
+          <th>17:00</th>
+          <th>17:30</th>
+          <th>18:00</th>
+          <th>18:30</th>
+          <th>19:00</th>
+          <th>19:30</th>
+          <th>20:00</th>
+          <th>20:30</th>
+          <th>21:00</th>
+          <th>21:30</th>
+          <th>22:00</th>
+        </tr>
+      </table>
+    </div>
+
+<script>
+
+  "use strict";
+
+const dailyTable = document.querySelector(".daily_table");
+
+
+    let kursDb = [
+    {% for group in groups %}
+        {
+          nomi: "{{group.name}}",
+          teacher: "{{group.teacher}}",
+          xona: "{{group.room}}",
+          boshlanish: "{{group.starttime}}",
+          tugash: "{{group.endtime}}",
+          //create unique color for each group only one color and for future use
+          rang: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+
+          
+          kursNomi: "{{group.course}}",
+          kurs_boshlanish: "{{ group.starttime|time:"H:i" }}",
+          kurs_tugashi: "{{group.endtime|time:"H:i"}}",
+          talabalar_soni: "7",
+        },
+    {% endfor %}
+    ];
+
+let xonaDb = [
+  
+ {% for room in rooms %}
+ 
+  "{{room.name}}",
+ 
+ {% endfor %}
+  
+];
+
+for (let i = 0; i < xonaDb.length; i++) {
+  let xonaTr = document.createElement("tr");
+  xonaTr.className = `table_room_${i + 1}-xona`;
+  let xonaRowName = document.createElement("td");
+  xonaRowName.textContent = xonaDb[i];
+  xonaTr.appendChild(xonaRowName);
+  for (let y = 0; y < 31; y++) {
+    let xonaRow = document.createElement("td");
+    xonaTr.appendChild(xonaRow);
+  }
+  dailyTable.appendChild(xonaTr);
+}
+
+kursDb.forEach((kurs) => {
+  kurs.height = 100;
+
+  let cardXona = document.querySelector(`.table_room_${kurs.xona}`);
+  let cardXonaTd = document.querySelectorAll(`.table_room_${kurs.xona}`)[0];
+
+  let cardXonaElement = document.createElement("div");
+  cardXonaElement.className = "kursCard";
+
+  const cardXonaName = document.createElement("div");
+  cardXonaName.className = "cardXonaName";
+  cardXonaName.textContent = kurs.kursNomi;
+  cardXonaElement.appendChild(cardXonaName);
+  const cardXonaGroup = document.createElement("div");
+  cardXonaGroup.className = "cardXonaGroup";
+  cardXonaGroup.textContent = kurs.nomi;
+  cardXonaElement.appendChild(cardXonaGroup);
+  const cardXonaTeacher = document.createElement("div");
+  cardXonaTeacher.className = "cardXonaTeacher";
+  cardXonaTeacher.textContent = kurs.teacher;
+  cardXonaElement.appendChild(cardXonaTeacher);
+  const cardXonaMuddat = document.createElement("div");
+  cardXonaMuddat.className = "cardXonaMuddat";
+  cardXonaMuddat.textContent = `${kurs.kurs_boshlanish.substring(
+    0,
+    5
+  )} - ${kurs.kurs_tugashi.substring(0, 5)}`;
+  cardXonaElement.appendChild(cardXonaMuddat);
+  const cardXonaStudentNumber = document.createElement("div");
+  cardXonaStudentNumber.className = "cardXonaStudentNumber";
+  cardXonaStudentNumber.textContent = kurs.talabalar_soni;
+  cardXonaElement.appendChild(cardXonaStudentNumber);
+
+  let soat = parseInt(kurs.boshlanish.substring(0, 2));
+  let minut = parseInt(kurs.boshlanish.substring(3, 5));
+  let soat1 = parseInt(kurs.tugash.substring(0, 2));
+  let minut1 = parseInt(kurs.tugash.substring(3, 5));
+
+  let leftMargin = 100 + (soat - 7) * 200;
+  let minut2 = 0;
+
+  if (minut == 30) {
+    leftMargin += 100;
+  }
+
+  if (minut1 - minut == 30) {
+    minut2 = 0.5;
+  }
+
+  let uzunlik = (soat1 - soat) * 200 + minut2 * 200;
+
+  cardXonaElement.style.left = `${leftMargin}px`;
+  cardXonaElement.style.backgroundColor = "blue";
+  cardXona.appendChild(cardXonaElement);
+  cardXonaElement.style.backgroundColor = kurs.rang;
+  cardXonaElement.style.width = `${uzunlik}px`;
+  cardXonaTd.style.height = `${cardXonaElement.offsetHeight}px`;
+  if (cardXonaElement.offsetHeight > kurs.height) {
+    cardXonaTd.style.height = `${cardXonaElement.offsetHeight}px`;
+  }
+});
+
+</script>
+{% endblock%}

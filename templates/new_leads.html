@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='card card-body'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <h1>Create Lead {{request.user}}</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        
+        {{form.as_p}}
+        
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>        
+</div>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.has('a')){
+            document.getElementById("id_ledstype").value=urlParams.get('a');
+        }
+
+    </script>
+
+{% endblock content %}

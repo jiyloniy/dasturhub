@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  /* Elementlarga stil bering */
+  h1 {
+    font-size: 24px;
+    color: #333; /* O'zingiz istagan rangni tanlang */
+  }
+  p {
+    font-size: 18px;
+    color: #666; /* O'zingiz istagan rangni tanlang */
+  }
+  form {
+    margin-top: 20px;
+  }
+  button[type="submit"] {
+    background-color: #007BFF; /* O'zingiz istagan rangni tanlang */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  a {
+    text-decoration: none;
+    color: #007BFF; /* O'zingiz istagan rangni tanlang */
+  }
+</style>
+
+<h1>Delete Lead</h1>
+{% comment %} <p>Are you sure you want to delete "{{ lead.name }}"?</p> {% endcomment %}
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Delete</button>
+  {% comment %} <a href="{% url 'listleads' %}">Cancel</a> {% endcomment %}
+</form>
+</style>
+{% endblock content %}

@@ -1,0 +1,172 @@
+{% load static %}
+    <div class="container">
+      <div class="container_Flex">
+        <div class="sidebar">
+          <div class="logo">
+            <a href="./index.html">
+              <img src="{% static "./images/Wave.svg"  %}" alt="wave" />
+              Tizim.info
+            </a>
+          </div>
+          <div class="sidebar_line"></div>
+          <div class="sidebar_menus">
+            <a href="{% url "periods" %}" class="dashboard ">
+              <i class="fa-light fa-house"></i>LEADS
+            </a>
+            <a href="{% url "students" %}" class="market_link">
+              <i class="fa-light fa-clipboard-list-check"></i>Students
+            </a>
+            <a href="{% url "groups" %}" class="birnima">
+              <i class="fa-regular fa-message-lines"></i>Groups
+            </a>
+            <a href="{% url "courses" %}" class="ikkinima">
+              <i class="fa-regular fa-message-lines"></i>Courses
+            </a>
+            <a href="{% url "teachers" %}" class="leads_link">
+              <i class="fa-regular fa-message-lines"></i>Teachers
+            </a>
+            <a href="#" class="card_link">
+              <i class="fa-regular fa-credit-card"></i>Moliya
+            </a>
+            <a href="#" class="question_link">
+              <i class="fa-regular fa-circle-question"></i>Xisobot
+            </a>
+            <a href="#" class="settings_link">
+              <i class="fa-regular fa-gear"></i>Settings
+            </a>
+          </div>
+        </div>
+        <div class="dashboard">
+          <div class="dashboard_navbar">
+            <div class="search_dashboard">
+              <div class="search_wrapper">
+                <img src="{% static "./images/Search.svg" %}" />
+                <input type="text" placeholder="Search" id='cardSearchInput'/>
+              </div>
+              <div class="search_filter">
+                <img src="{% static "./images/Filter.svg" %}" />
+              </div>
+            </div>
+            {% if request.path == '/' %}
+            <a href='{% url "period_add" %}'>
+              <button class="add_lead_btn" >
+                <i class="fa-solid fa-person-circle-plus"> </i> 
+                <span>Add period</span>
+              </button>
+            </a>
+            {% endif %}
+            {% if request.path == '/students/' %}
+            <a href='{% url "studentcreate" %}'>
+              <button class="add_lead_btn" >
+                <i class="fa-solid fa-person-circle-plus"> </i> 
+                <span>ADD STUDENT</span>
+              </button>
+            </a>
+            {% endif %}
+            {% if request.path == '/courses/' %}
+            <a href='{% url "addcourse" %}'>
+              <button class="add_lead_btn" >
+                <i class="fa-solid fa-person-circle-plus"> </i> 
+                <span>Add Course</span>
+              </button>
+            </a>
+            {% endif %}
+            {% if request.path == '/groups/' %}
+            <a href='{% url "add_group" %}'>
+              <button class="add_lead_btn" >
+                <i class="fa-solid fa-person-circle-plus"> </i> 
+                <span>Add group</span>
+              </button>
+            </a>
+            {% endif %}
+            {% if request.path == '/teachers/' %}
+            <a href='#'>
+              <button class="add_lead_btn" >
+                <i class="fa-solid fa-person-circle-plus"> </i> 
+                <span>Add teacher</span>
+              </button>
+            </a>
+            {% endif %}
+            <div class="notification">
+              <img src="{% static "./images/bell.svg" %}" />
+              <div class="noti_circle"></div>
+            </div>
+            <div class="profile_wrapper">
+              <div class="profile_btn">
+                <img
+                  src="{% static "./images/profile.jpg" %}"
+                  width="32px"
+                  height="32px"
+                  class="profile_picture"
+                />
+                <div class="profile_name">Cristiano R.</div>
+                <i class="profile_icon fa-solid fa-chevron-down"></i>
+              </div>
+              <div class="profile_details profileNone">
+                <a href="#"><i class="fa-solid fa-gear"></i></a>
+                <a href="#"
+                  ><i class="fa-solid fa-arrow-right-from-bracket"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Get the current URL
+        var currentUrl = window.location.href;
+      
+        // Get all sidebar links
+        var sidebarLinks = document.querySelectorAll(".sidebar a");
+      
+        // Loop through the links
+        sidebarLinks.forEach(function(link) {
+          // Check if the link's href matches the current URL
+          if (link.href === currentUrl) {
+            // Add the "active_sidebar" class to the matching link
+            link.classList.add("active_sidebar");
+          }
+        });
+      
+        // Alternatively, you can add an event listener for click events
+        // and toggle the "active_sidebar" class accordingly
+        sidebarLinks.forEach(function(link) {
+          link.addEventListener("click", function(event) {
+            sidebarLinks.forEach(function(innerLink) {
+              innerLink.classList.remove("active_sidebar");
+            });
+            link.classList.add("active_sidebar");
+          });
+        });
+      });
+      </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Get the input field for card search
+          var cardSearchInput = document.getElementById("cardSearchInput");
+        
+          // Get all the cards you want to search through
+          var cards = document.querySelectorAll(".table_card");
+        
+          cardSearchInput.addEventListener("input", function() {
+            var searchTerm = cardSearchInput.value.toLowerCase();
+        
+            cards.forEach(function(card) {
+              var cardText = card.textContent.toLowerCase();
+        
+              // Check if the card text includes the search term
+              if (cardText.includes(searchTerm)) {
+                card.style.display = "block"; // Show the card if it matches the search term
+              } else {
+                card.style.display = "none"; // Hide the card if it doesn't match the search term
+              }
+            });
+          });
+        });
+        </script>
+        
+      
+    <script src="./profile.js"></script>
+ 

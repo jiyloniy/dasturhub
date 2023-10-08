@@ -1,0 +1,108 @@
+.table_cards_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.table_sorov {
+  width: 350px;
+  margin: 10px;
+}
+
+.table_title {
+  font-size: 25px;
+  color: #141416;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table_title span {
+  color: gray;
+}
+
+.table_add_btn {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 20px;
+}
+
+.table_search_btn {
+  margin: 10px 0;
+  width: 100%;
+}
+
+.table_search_btn input {
+  width: 100%;
+  padding: 10px 20px;
+  outline: none;
+  border: none;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.table_cards {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 70vh;
+  height: 100%;
+  overflow: auto;
+}
+
+.table_card {
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.table_card_left,
+.table_card_right {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.table_card_phone {
+  font-size: 14px;
+  color: dodgerblue;
+}
+
+.table_card_edit {
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.table_card_time {
+  color: gray;
+  font-size: 12px;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Change the thumb color */
+  border-radius: 6px; /* Rounded corners for the thumb */
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Change the track color */
+}
+
+/* Style the scrollbar corner */
+::-webkit-scrollbar-corner {
+  background-color: #fff; /* Change the corner color */
+}
