@@ -1,14 +1,18 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
-from .models import Rooms,Leads,Period,Course,Groups,Teacher,Student
+from .models import Rooms, Leads, Period, Course, Groups, Teacher, Student
 from django.contrib import messages
-from .forms import LeadToStudentForm, GroupsForms,CourseForms,LeadsForms,LeadsUpdateForms, PeriodForms,TeacherForms,StudentForm
+from .forms import LeadToStudentForm, GroupsForms, CourseForms, LeadsForms, LeadsUpdateForms, PeriodForms, TeacherForms, StudentForm
 # Create your views here.
+
+
 def home(request):
 
-    return render(request,'index.html',{})
+    return render(request, 'index.html', {})
 
-# ------------leads create------------  
+# ------------leads create------------
+
+
 def leads(request):
     form = LeadsForms()
     if request.method == 'POST':
@@ -16,58 +20,54 @@ def leads(request):
         if form.is_valid():
             form.save()
             return redirect('periods')
-    context = {'form':form}
+    context = {'form': form}
     return render(request, template_name='new_leads.html', context=context)
 
 
-
 def leads_list(request):
-    
+
     new = Leads.objects.filter(ledstype='new')
     inprogress = Leads.objects.filter(ledstype='inprogress')
     colected = Leads.objects.filter(ledstype='colected')
     n = new.count()
     i = inprogress.count()
     c = colected.count()
-    context = {'new':new,
-                'inprogress':inprogress,
-                'colected':colected,
-                "n":n,
-                "i":i,
-                "c":c   
-                }
-    
-    
-    return render(request, 'card.html',context)
+    context = {'new': new,
+               'inprogress': inprogress,
+               'colected': colected,
+               "n": n,
+               "i": i,
+               "c": c
+               }
+
+    return render(request, 'card.html', context)
 
 
-
-def lead_update(request,pk):
+def lead_update(request, pk):
     lead = Leads.objects.get(id=pk)
-    form = LeadsUpdateForms(instance=lead) 
+    form = LeadsUpdateForms(instance=lead)
     print(form)
     if request.method == 'POST':
-        form =LeadsUpdateForms(request.POST,instance=lead)
+        form = LeadsUpdateForms(request.POST, instance=lead)
         if form.is_valid():
             form.save()
             return redirect('periods')
     leadupdate = True
-    context = {'form':form,
-               'leadupdate':leadupdate,
-                'lead':lead,    
+    context = {'form': form,
+               'leadupdate': leadupdate,
+               'lead': lead,
                }
-    return render(request,'update.html',context)
+    return render(request, 'update.html', context)
 
 
-
-def lead_delete(request,pk):
-    lead = get_object_or_404(Leads,pk=pk)
+def lead_delete(request, pk):
+    lead = get_object_or_404(Leads, pk=pk)
     if request.method == 'POST':
         lead.delete()
         messages.success(request, 'Lead deleted successfully.')
         return redirect('periods')
-    context = {'lead':lead}
-    return render(request,'delete.html',context)
+    context = {'lead': lead}
+    return render(request, 'delete.html', context)
 
 
 # <------------- period (hodisalar)----------->
@@ -76,9 +76,9 @@ def period(request):
     periods = Period.objects.all()
     leads = Leads.objects.all()
     context = {
-        'periods':periods,
-    }   
-    return render(request, 'card2.html',context)
+        'periods': periods,
+    }
+    return render(request, 'card2.html', context)
 
 
 def period_add(request):
@@ -88,8 +88,9 @@ def period_add(request):
         if form.is_valid():
             form.save()
             return redirect('periods')
-    context = {'form':form}
-    return render(request,'add_period.html',context)
+    context = {'form': form}
+    return render(request, 'add_period.html', context)
+
 
 def period_update(request, pk):
     period = get_object_or_404(Period, pk)
@@ -100,17 +101,18 @@ def period_update(request, pk):
             form.save()
             return redirect('periods')
     context = {
-        'form':form
+        'form': form
     }
 
-    return render(request, 'update.html',context)
+    return render(request, 'update.html', context)
+
 
 def group(request):
     groups = Groups.objects.all()
     rooms = Rooms.objects.all()
     context = {
-        'groups':groups,
-        'rooms':rooms
+        'groups': groups,
+        'rooms': rooms
     }
     return render(request, 'groups.html', context)
 
@@ -123,8 +125,9 @@ def add_group(request):
         if form.is_valid():
             form.save()
             return redirect('groups')
-    context = {'form':form}
-    return render(request,'add_group.html',context)
+    context = {'form': form}
+    return render(request, 'add_group.html', context)
+
 
 def group_update(request, pk):
     group = get_object_or_404(Groups, pk=pk)
@@ -134,8 +137,9 @@ def group_update(request, pk):
         if form.is_valid():
             form.save()
             return redirect('groups')
-    context = {'form':form}
+    context = {'form': form}
     return render(request, 'add_group.html', context)
+
 
 def group_delete(request, pk):
     group = get_object_or_404(Groups, pk=pk)
@@ -143,15 +147,17 @@ def group_delete(request, pk):
         group.delete()
         messages.success(request, 'Group deleted successfully.')
         return redirect('groups')
-    context = {'group':group}
+    context = {'group': group}
     return render(request, 'delete.html', context)
+
 
 def course(request):
     courses = Course.objects.all()
     context = {
-        'courses':courses
+        'courses': courses
     }
     return render(request, 'courses.html', context)
+
 
 def course_create(request):
     course = Course.objects.all()
@@ -161,8 +167,9 @@ def course_create(request):
         if form.is_valid():
             form.save()
             return redirect('courses')
-    context = {'form':form}
+    context = {'form': form}
     return render(request, 'add_course.html', context)
+
 
 def course_update(request, pk):
     group = get_object_or_404(Course, pk=pk)
@@ -172,8 +179,9 @@ def course_update(request, pk):
         if form.is_valid():
             form.save()
             return redirect('courses')
-    context = {'form':form}
+    context = {'form': form}
     return render(request, 'add_course.html', context)
+
 
 def course_delete(request, pk):
     group = get_object_or_404(Course, pk=pk)
@@ -181,11 +189,9 @@ def course_delete(request, pk):
         group.delete()
         messages.success(request, 'Course deleted successfully.')
         return redirect('courses')
-    context = {'group':group}
+    context = {'group': group}
     return render(request, 'delete.html', context)
 
-
-    
 
 # def group_filter_by_day(request, day):
 #     today = Groups.objects.filter(day__name=day)
@@ -204,7 +210,7 @@ def course_delete(request, pk):
 def teacher(request):
     teachers = Teacher.objects.all()
     context = {
-        'teachers':teachers
+        'teachers': teachers
     }
     return render(request, 'teachers.html', context)
 
@@ -218,9 +224,10 @@ def techer_create(request, pk):
             form.save()
             return redirect('teachers')
     context = {
-        'form':form
+        'form': form
     }
-    return render(request,'add_course.html',context)
+    return render(request, 'add_course.html', context)
+
 
 def teacher_update(request, pk):
     teacher = get_object_or_404(Teacher, pk=pk)
@@ -231,20 +238,21 @@ def teacher_update(request, pk):
             form.save()
             return redirect('teachers')
     context = {
-        'form':form
+        'form': form
     }
-    return render(request, 'update.html',context)
+    return render(request, 'update.html', context)
+
 
 def techer_delete(request, pk):
     teacher = get_object_or_404(Teacher, pk)
     if request.method == 'POST':
         teacher.delete()
-        messages.success(request,'Teacher deleted')
+        messages.success(request, 'Teacher deleted')
         redirect('teachers')
     context = {
-        'teacher':teacher
+        'teacher': teacher
     }
-    return render(request, 'delete.html',context)
+    return render(request, 'delete.html', context)
 
 
 # -----------------students-------------------------
@@ -252,10 +260,9 @@ def techer_delete(request, pk):
 def student(request):
     students = Student.objects.all()
     context = {
-        'students':students
+        'students': students
     }
     return render(request, 'students.html', context)
-
 
 
 def student_create(request):
@@ -267,11 +274,10 @@ def student_create(request):
             return redirect('students')
     student_create = True
     context = {
-        'form':form,
-        'student_create':student_create
+        'form': form,
+        'student_create': student_create
     }
     return render(request, 'add_group.html', context)
-
 
 
 # def lead_to_student(request, pk):
@@ -291,7 +297,7 @@ def student_create(request):
 #     return render(request, 'lead_to_student.html', context)
 
 def student_update(request, pk):
-    student = get_object_or_404(Student,pk=pk)
+    student = get_object_or_404(Student, pk=pk)
     form = StudentForm(instance=student)
     if request.method == 'POST':
         form = StudentForm(request.POST, instance=student)
@@ -300,35 +306,37 @@ def student_update(request, pk):
 
             return redirect('students')
     context = {
-        'form':form
+        'form': form
     }
     studentupdate = True
-    return render(request, 'update.html',context)
+    return render(request, 'update.html', context)
 
-def student_delete(request,pk):
+
+def student_delete(request, pk):
     student = get_object_or_404(Student, pk=pk)
-    if request.method =='POST':
+    if request.method == 'POST':
         student.delete()
-        messages.success(request,'Student deleted')
+        messages.success(request, 'Student deleted')
         return redirect('students')
     context = {
-        'student':student
+        'student': student
     }
     studentdelete = True
-    return render(request, 'delete.html',context)
-
+    return render(request, 'delete.html', context)
 
 
 def lead_to_sudent(request, pk):
-    lead = get_object_or_404(Leads,pk=pk)
-    form = LeadToStudentForm(instance=lead)
+    lead = get_object_or_404(Leads, pk=pk)
+    form = LeadToStudentForm()
     if request.method == 'POST':
-        form = LeadToStudentForm(request.POST, instance=lead)
+        form = LeadToStudentForm(request.POST)
         if form.is_valid():
             form.save()
             print('succsess')
+            print('succsess')
             return redirect('students')
     context = {
-        'form':form
+        'form': form,
+        'lead': lead,
     }
     return render(request, 'alohida.html', context)
