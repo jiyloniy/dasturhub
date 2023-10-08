@@ -2,7 +2,14 @@
 {% block content %}
 <div class='card card-body'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <h1>Update Lead {{request.user}}</h1>
+    
+    
+    {% if leadupdate %}
+      <h1>Lead Update </h1>
+    {% else  %}
+      <h1>Student Update </h1>
+    {% endif %}
+
     <form action="" method="POST">
         {% csrf_token %}
         

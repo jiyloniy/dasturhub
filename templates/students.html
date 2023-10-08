@@ -20,10 +20,10 @@
         </div>
         <div class="table_card_right">
           <div class="table_card_edit">
-            {% comment %} <a href = '{% url "student_update" student.id %}'><i class="fa-regular fa-pen-to-square" style="color: lawngreen;"></i></a>   
-            <a href = '{% url "student_delete" student.id %}'><i class="fa-regular fa-trash" style="color: red; margin-left: 10px;"></i></a> {% endcomment %}
+            <a href = '{% url "student_update" student.id %}'><i class="fa-regular fa-pen-to-square" style="color: lawngreen;"></i></a>   
+            <a href = '{% url "student_delete" student.id %}'><i class="fa-regular fa-trash" style="color: red; margin-left: 10px;"></i></a>
           </div>
-          {% comment %} <div class="table_card_time">{{lead.created_at}}</div> {% endcomment %}
+          <div class="table_card_time">{{lead.created_at}}</div>
         </div>
       </div>
       {% endfor %}

@@ -305,8 +305,11 @@ def student_update(request, pk):
             form.save()
 
             return redirect('students')
+    student_updatee = True
     context = {
-        'form': form
+        'form': form,
+        'student_update' : student_updatee,
+        'student':student,
     }
     studentupdate = True
     return render(request, 'update.html', context)
