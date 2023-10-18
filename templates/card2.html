@@ -16,7 +16,7 @@
     {% for period in periods %}
     <div class="table_sorov table_sorov_main">
       <div class="table_title">
-        <div class="table_name_title">{{period.name}} <span>({{period.leads_set.all.count}})</span></div>
+        <div class="table_name_title">{{period.name}} <span>({{period.unarchived_leads.count}})</span></div>
         <a href='{% url "leadregister" %}?a={{ period.id }}'><button class="table_add_btn">+</button></a>
       </div>
       <div class="table_search_btn">
@@ -24,7 +24,7 @@
       </div>
       
       <div class="table_cards">
-        {% for lead in period.leads_set.all %}
+        {% for lead in period.unarchived_leads %}
         <div class="table_card">
           <div class="table_card_left">
             <div class="table_card_name">{{lead.name}}</div>

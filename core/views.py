@@ -24,23 +24,23 @@ def leads(request):
     return render(request, template_name='new_leads.html', context=context)
 
 
-def leads_list(request):
+# def leads_list(request):
+#     unarchived = Leads.objects.filter(archive=False)
+#     new = unarchived.filter(ledstype='new')
+#     inprogress = unarchived.filter(ledstype='inprogress')
+#     colected = unarchived.filter(ledstype='colected')
+#     n = new.count()
+#     i = inprogress.count()
+#     c = colected.count()
+#     context = {'new': new,
+#                'inprogress': inprogress,
+#                'colected': colected,
+#                "n": n,
+#                "i": i,
+#                "c": c
+#                }
 
-    new = Leads.objects.filter(ledstype='new')
-    inprogress = Leads.objects.filter(ledstype='inprogress')
-    colected = Leads.objects.filter(ledstype='colected')
-    n = new.count()
-    i = inprogress.count()
-    c = colected.count()
-    context = {'new': new,
-               'inprogress': inprogress,
-               'colected': colected,
-               "n": n,
-               "i": i,
-               "c": c
-               }
-
-    return render(request, 'card.html', context)
+#     return render(request, 'card.html', context)
 
 
 def lead_update(request, pk):
@@ -62,19 +62,23 @@ def lead_update(request, pk):
 
 def lead_delete(request, pk):
     lead = get_object_or_404(Leads, pk=pk)
-    if request.method == 'POST':
-        lead.delete()
-        messages.success(request, 'Lead deleted successfully.')
+    if lead:
+        if request.method == 'POST':
+            lead.archive = True
+            lead.save()
+            messages.success(request, 'Lead deleted successfully.')
+            #context qilish kerak
+            return redirect('periods')
+        context = {'lead': lead}
+        return render(request, 'delete.html', context)
+    else:
         return redirect('periods')
-    context = {'lead': lead}
-    return render(request, 'delete.html', context)
 
 
 # <------------- period (hodisalar)----------->
 
 def period(request):
     periods = Period.objects.all()
-    leads = Leads.objects.all()
     context = {
         'periods': periods,
     }
@@ -308,8 +312,8 @@ def student_update(request, pk):
     student_updatee = True
     context = {
         'form': form,
-        'student_update' : student_updatee,
-        'student':student,
+        'student_update': student_updatee,
+        'student': student,
     }
     studentupdate = True
     return render(request, 'update.html', context)
@@ -335,6 +339,8 @@ def lead_to_sudent(request, pk):
         form = LeadToStudentForm(request.POST)
         if form.is_valid():
             form.save()
+            lead.archive = True
+            lead.save()
             print('succsess')
             print('succsess')
             return redirect('students')
@@ -343,3 +349,15 @@ def lead_to_sudent(request, pk):
         'lead': lead,
     }
     return render(request, 'alohida.html', context)
+
+
+def xisobot(request):
+    leads = Leads.objects.all().count()
+    students = Student.objects.all().count()
+    monthly_leads = Leads.objects.filter(created_at__month=5).count()
+    context = {
+        'leads': leads,
+        'student': students,
+        'monthly_leads': monthly_leads
+    }
+    return render(request, 'xisobot.html', context)
