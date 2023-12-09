@@ -61,8 +61,8 @@ const dailyTable = document.querySelector(".daily_table");
 
           
           kursNomi: "{{group.course}}",
-          kurs_boshlanish: "{{ group.starttime|time:"H:i" }}",
-          kurs_tugashi: "{{group.endtime|time:"H:i"}}",
+          kurs_boshlanish: "{{ group.starttime|time:"G:i" }}",
+          kurs_tugashi: "{{group.endtime|time:"G:i"}}",
           talabalar_soni: "7",
         },
     {% endfor %}
